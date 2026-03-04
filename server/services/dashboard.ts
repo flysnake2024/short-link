@@ -244,7 +244,7 @@ export async function updateLink(
 			"password",
 		];
 		// 过滤更新字段
-		const filteredUpdates = {};
+		const filteredUpdates: Record<string, unknown> = {};
 		for (const [key, value] of Object.entries(updates)) {
 			if (allowedFields.includes(key) && value !== undefined) {
 				// 特殊处理密码字段
@@ -714,7 +714,7 @@ export async function updateLinkAdmin(
 			"password",
 		];
 
-		const filteredUpdates = {};
+		const filteredUpdates: Record<string, unknown> = {};
 		for (const [key, value] of Object.entries(updates)) {
 			if (allowedFields.includes(key) && value !== undefined) {
 				// 特殊处理密码字段
