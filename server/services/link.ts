@@ -561,7 +561,7 @@ export async function updateLinkConfig(
 		];
 
 		// 过滤只保留允许更新的字段
-		const filteredUpdates = {};
+		const filteredUpdates: Record<string, unknown> = {};
 		for (const field of allowedFields) {
 			if (updates[field] !== undefined) {
 				// 特殊处理密码字段
