@@ -613,6 +613,12 @@ const handleDropdownSelect = async (value) => {
 };
 
 const generateShortLink = async () => {
+	if (!userStore.isAuthenticated) {
+		Message.warning("请先登录后再生成短链接");
+		router.push("/login");
+		return;
+	}
+
 	const inputUrl = urlInput.value.trim();
 	if (!inputUrl) {
 		Message.warning("请输入链接");

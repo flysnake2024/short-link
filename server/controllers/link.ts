@@ -41,25 +41,6 @@ export async function createShortLink(request, reply) {
 	const inputUrl = url || request.body?.url;
 	const userId = request.user?.id || null;
 
-	// 未登录用户不允许使用高级配置
-	if (!userId) {
-		const hasAdvancedOptions =
-			options.title ||
-			options.expiration_option_id ||
-			options.redirect_type ||
-			options.max_clicks ||
-			options.pass_query_params ||
-			options.forward_headers ||
-			options.access_restrictions;
-
-		if (hasAdvancedOptions) {
-			return reply.status(401).send({
-				code: 401,
-				msg: "登录后才能使用高级配置功能",
-			});
-		}
-	}
-
 	// 使用统一验证模块验证所有参数
 	const validation = validateCreateLinkParams({ url: inputUrl, options });
 	const validationErr = validationError(reply, validation);

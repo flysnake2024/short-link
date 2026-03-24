@@ -10,7 +10,7 @@
 import { RATE_LIMIT_CONFIG } from "../config/index.js";
 import * as authController from "../controllers/auth.js";
 import * as linkController from "../controllers/link.js";
-import { optionalAuthenticate } from "../middlewares/auth.js";
+import { authenticate } from "../middlewares/auth.js";
 
 /**
  * API 路由组 - 公开接口
@@ -47,7 +47,7 @@ export default async function apiRoutes(fastify) {
 	fastify.post(
 		"/addUrl",
 		{
-			preHandler: optionalAuthenticate,
+			preHandler: authenticate,
 			config: {
 				rateLimit: {
 					max: RATE_LIMIT_CONFIG.CREATE_LINK.MAX,
