@@ -231,6 +231,7 @@ export async function updateLink(
 
 		// 允许更新的字段
 		const allowedFields = [
+			"link",
 			"title",
 			"description",
 			"is_active",
@@ -701,6 +702,7 @@ export async function updateLinkAdmin(
 ): Promise<Link> {
 	try {
 		const allowedFields = [
+			"link",
 			"title",
 			"description",
 			"is_active",

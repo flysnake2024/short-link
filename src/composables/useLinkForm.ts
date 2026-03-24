@@ -199,6 +199,7 @@ export function useLinkForm(
 	// 构建提交数据
 	const buildSubmitData = (): UpdateLinkRequest => {
 		const data: UpdateLinkRequest = {
+			...(isNew.value ? {} : { link: formData.link || null }),
 			title: formData.title || null,
 			description: formData.description || null,
 			is_active: formData.is_active,

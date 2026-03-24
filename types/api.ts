@@ -36,6 +36,7 @@ export interface CreateLinkRequest {
  * Request to update an existing link
  */
 export interface UpdateLinkRequest {
+	link?: string | null;
 	title?: string | null;
 	description?: string | null;
 	is_active?: boolean;

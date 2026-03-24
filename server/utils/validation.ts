@@ -663,6 +663,18 @@ export function validateUpdateLinkParams(updates: Record<string, unknown>): Vali
 		return result(false, "更新参数不能为空");
 	}
 
+	// 验证原始链接
+	if (updates.link !== undefined && updates.link !== null) {
+		if (typeof updates.link !== "string" || (updates.link as string).trim() === "") {
+			return result(false, "原始链接不能为空");
+		}
+		try {
+			new URL(updates.link as string);
+		} catch {
+			return result(false, "原始链接格式不正确，请输入有效的 URL");
+		}
+	}
+
 	// 验证标题
 	if (updates.title !== undefined) {
 		const titleResult = validateTitle(updates.title as string);

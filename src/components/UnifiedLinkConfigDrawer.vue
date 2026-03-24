@@ -256,16 +256,21 @@ watch(
                         </a-input>
                     </a-form-item>
 
-                    <!-- 原始链接展示（编辑时且非首页模式） -->
+                    <!-- 原始链接（编辑时且非首页模式，可修改） -->
                     <a-form-item
                         v-else-if="!isNew && (mode as string) !== 'home'"
                         label="原始链接"
+                        field="link"
                     >
-                        <div
-                            class="text-gray-600 break-all bg-gray-50 p-3 rounded-lg text-sm"
+                        <a-input
+                            v-model="formData.link"
+                            placeholder="请输入要跳转的链接"
+                            allow-clear
                         >
-                            {{ formData.link }}
-                        </div>
+                            <template #prefix>
+                                <icon-link />
+                            </template>
+                        </a-input>
                     </a-form-item>
 
                     <!-- 短链接（仅编辑模式且管理员模式显示） -->
