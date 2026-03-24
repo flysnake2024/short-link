@@ -80,18 +80,11 @@
                     </template>
 
                     <template v-else>
-                        <a-space>
-                            <a-button
-                                type="text"
-                                @click="$router.push('/login')"
-                                >登录</a-button
-                            >
-                            <a-button
-                                type="primary"
-                                @click="$router.push('/register')"
-                                >注册</a-button
-                            >
-                        </a-space>
+                        <a-button
+                            type="primary"
+                            @click="$router.push('/login')"
+                            >登录</a-button
+                        >
                     </template>
                 </div>
             </div>

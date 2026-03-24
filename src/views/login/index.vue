@@ -76,38 +76,13 @@
             </a-button>
         </a-form>
 
-        <div class="relative my-8">
-            <div class="absolute inset-0 flex items-center">
-                <div class="w-full border-t border-gray-200 dark:border-gray-700"></div>
-            </div>
-            <div class="relative flex justify-center text-sm">
-                <span class="px-4 bg-white dark:bg-gray-900 text-gray-500 dark:text-gray-400">
-                    第三方账号登录
-                </span>
-            </div>
-        </div>
-
-        <SocialAuthButtons
-            :loading="userStore.isLoading"
-            @github-login="handleGithubLogin"
-            @google-login="handleGoogleLogin"
-        />
-
         <div class="text-center mt-8">
-            <p class="text-gray-600 dark:text-gray-400">
-                还没有账号？
-                <a-link @click="goToRegister" class="font-bold! cursor-pointer"
-                    >立即注册</a-link
-                >
-            </p>
-            <div class="mt-4">
-                <a-link
-                    @click="goToHome"
-                    class="text-gray-400! hover:text-gray-600! dark:text-gray-500! dark:hover:text-gray-300! text-sm"
-                >
-                    <icon-left /> 返回首页
-                </a-link>
-            </div>
+            <a-link
+                @click="goToHome"
+                class="text-gray-400! hover:text-gray-600! dark:text-gray-500! dark:hover:text-gray-300! text-sm"
+            >
+                <icon-left /> 返回首页
+            </a-link>
         </div>
     </AuthLayout>
 </template>
@@ -115,10 +90,9 @@
 <script setup lang="ts">
 import { Message } from "@arco-design/web-vue";
 import { IconEmail, IconLeft, IconLock } from "@arco-design/web-vue/es/icon";
-import { onMounted, onUnmounted, reactive } from "vue";
+import { reactive } from "vue";
 import { useRouter } from "vue-router";
 import AuthLayout from "@/components/AuthLayout.vue";
-import SocialAuthButtons from "@/components/base/SocialAuthButtons.vue";
 import { useUserStore } from "@/stores";
 
 const router = useRouter();
@@ -128,85 +102,6 @@ const form = reactive({
 	email: "",
 	password: "",
 });
-
-// 处理认证错误事件（用于第三方登录被禁用提示）
-function handleAuthError(event: any) {
-	const { error } = event.detail;
-	if (error?.code === "USER_BANNED") {
-		Message.error({
-			content: error.message || "您的账号已被管理员禁用，请联系管理员",
-			duration: 5000,
-		});
-	}
-}
-
-// 检查 URL 中的 OAuth 错误参数
-function checkOAuthError() {
-	const urlParams = new URLSearchParams(window.location.search);
-	const error = urlParams.get("error");
-	const errorCode = urlParams.get("error_code");
-	const errorDescription = urlParams.get("error_description");
-
-	if (error) {
-		let errorMessage = "登录失败";
-
-		if (errorCode === "user_banned" || errorDescription?.includes("banned")) {
-			errorMessage = "您的账号已被管理员禁用，请联系管理员";
-
-			// 记录失败日志（尝试从其他 URL 参数获取邮箱）
-			const email = urlParams.get("email") || sessionStorage.getItem("oauth_email");
-			if (email) {
-				import("@/services/auth").then(({ recordLoginAttempt }) => {
-					recordLoginAttempt(email, false, "用户已被禁用", "oauth");
-				});
-			}
-		} else if (error === "access_denied") {
-			errorMessage = "您拒绝了授权请求";
-		} else {
-			errorMessage = errorDescription || `登录失败: ${error}`;
-		}
-
-		Message.error({
-			content: errorMessage,
-			duration: 5000,
-		});
-
-		// 清理 URL 中的错误参数
-		const cleanUrl = window.location.pathname;
-		window.history.replaceState({}, document.title, cleanUrl);
-	}
-}
-
-// 组件挂载时添加事件监听和检查 URL 错误
-onMounted(() => {
-	window.addEventListener("auth-error", handleAuthError);
-	checkOAuthError();
-});
-
-// 组件卸载时移除事件监听
-onUnmounted(() => {
-	window.removeEventListener("auth-error", handleAuthError);
-});
-
-// 处理 GitHub 登录
-async function handleGithubLogin() {
-	if (userStore.isLoading) return;
-	try {
-		await userStore.loginWithGithub();
-	} catch (error: any) {
-		Message.error(error.message || "GitHub 登录失败，请稍后再试");
-	}
-}
-
-// 处理 Google 登录
-async function handleGoogleLogin() {
-	if (userStore.isLoading) return;
-	try {
-		await userStore.loginWithGoogle();
-	} catch (error: any) {
-		Message.error(error.message || "Google 登录失败，请稍后再试");
-	}
-}
 
 // 处理邮箱登录
 async function handleEmailLogin({ errors }: any) {
@@ -246,10 +141,6 @@ async function handleEmailLogin({ errors }: any) {
 
 function handleForgotPassword() {
 	router.push("/forgot-password");
-}
-
-function goToRegister() {
-	router.push("/register");
 }
 
 function goToHome() {

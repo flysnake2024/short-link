@@ -47,15 +47,7 @@ const routes: RouteRecordRaw[] = [
 	},
 	{
 		path: "/register",
-		name: "register",
-		component: () => import("@/views/register/index.vue"),
-		meta: {
-			requiresAuth: false,
-			redirectIfAuthenticated: true,
-			title: "注册",
-			description: "注册 Short Link 账号，开始创建短链接。",
-			noindex: true,
-		},
+		redirect: "/login",
 	},
 	{
 		path: "/forgot-password",

@@ -8,38 +8,6 @@ import { ApiError } from "./request";
 import { supabase } from "./supabase";
 
 /**
- * 使用 GitHub 登录
- * @returns {Promise} 登录结果
- */
-export async function signInWithGithub() {
-	const { data, error } = await supabase.auth.signInWithOAuth({
-		provider: "github",
-		options: {
-			redirectTo: `${window.location.origin}/dashboard`,
-		},
-	});
-
-	if (error) throw error;
-	return data;
-}
-
-/**
- * 使用 Google 登录
- * @returns {Promise} 登录结果
- */
-export async function signInWithGoogle() {
-	const { data, error } = await supabase.auth.signInWithOAuth({
-		provider: "google",
-		options: {
-			redirectTo: `${window.location.origin}/dashboard`,
-		},
-	});
-
-	if (error) throw error;
-	return data;
-}
-
-/**
  * 使用邮箱密码登录
  * @param {string} email - 邮箱地址
  * @param {string} password - 密码
@@ -187,32 +155,8 @@ export async function recordLoginAttempt(
  * @param {Object} metadata - 用户元数据 (可选)
  * @returns {Promise} 注册结果
  */
-export async function signUpWithEmail(email, password, metadata = {}) {
-	const { data, error } = await supabase.auth.signUp({
-		email,
-		password,
-		options: {
-			data: metadata,
-			emailRedirectTo: `${window.location.origin}/dashboard`,
-		},
-	});
-
-	if (error) throw error;
-
-	const user = data?.user;
-	const identities = user?.identities;
-
-	const looksLikeAlreadyRegistered =
-		// 常见：user 存在但 identities 为空数组
-		(Array.isArray(identities) && identities.length === 0) ||
-		// 兜底：既没有 user 也没有 session
-		(!data?.user && !data?.session);
-
-	if (looksLikeAlreadyRegistered) {
-		throw new ApiError("User already registered", "USER_ALREADY_REGISTERED");
-	}
-
-	return data;
+export async function signUpWithEmail(_email, _password, _metadata = {}) {
+	throw new ApiError("本平台采用邀请制，注册须由管理员创建账号", "REGISTRATION_DISABLED");
 }
 
 /**

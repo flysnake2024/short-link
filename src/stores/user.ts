@@ -24,8 +24,6 @@ import {
 	getCurrentUser,
 	onAuthStateChange,
 	signInWithEmail,
-	signInWithGithub,
-	signInWithGoogle,
 	signUpWithEmail,
 } from "@/services/auth";
 
@@ -196,42 +194,6 @@ export const useUserStore = defineStore("user", () => {
 	}
 
 	/**
-	 * GitHub 登录
-	 */
-	async function loginWithGithub() {
-		isLoading.value = true;
-		authError.value = null;
-
-		try {
-			const data = await signInWithGithub();
-			return data;
-		} catch (error) {
-			authError.value = error.message;
-			throw error;
-		} finally {
-			isLoading.value = false;
-		}
-	}
-
-	/**
-	 * Google 登录
-	 */
-	async function loginWithGoogle() {
-		isLoading.value = true;
-		authError.value = null;
-
-		try {
-			const data = await signInWithGoogle();
-			return data;
-		} catch (error) {
-			authError.value = error.message;
-			throw error;
-		} finally {
-			isLoading.value = false;
-		}
-	}
-
-	/**
 	 * 邮箱注册
 	 */
 	async function registerWithEmail(email, password, metadata = {}) {
@@ -390,8 +352,6 @@ export const useUserStore = defineStore("user", () => {
 		initialize,
 		fetchAdminStatus,
 		loginWithEmail,
-		loginWithGithub,
-		loginWithGoogle,
 		registerWithEmail,
 		logout,
 		updateProfile,
