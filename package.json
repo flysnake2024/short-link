@@ -26,6 +26,7 @@
 		"@fastify/swagger": "^9.6.1",
 		"@fastify/swagger-ui": "^5.2.3",
 		"@supabase/supabase-js": "^2.89.0",
+		"@vercel/analytics": "^1.6.1",
 		"autoprefixer": "^10.4.23",
 		"concurrently": "^9.2.1",
 		"cross-env": "^10.1.0",
