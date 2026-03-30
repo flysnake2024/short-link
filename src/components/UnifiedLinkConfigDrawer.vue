@@ -542,6 +542,7 @@ watch(
 
                     <!-- 访问限制配置 -->
                     <AccessRestrictions
+                        :key="linkData?.id ?? 'new'"
                         :modelValue="accessRestrictions"
                         @update:modelValue="
                             (val) => {

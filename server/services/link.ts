@@ -142,13 +142,14 @@ export function validateAccessRestrictions(
 
 	// 来源限制（允许列表）
 	if (restrictions.allowed_referrers && restrictions.allowed_referrers.length > 0) {
-		if (referrer) {
-			const isAllowed = restrictions.allowed_referrers.some((ref) =>
-				referrer.toLowerCase().includes(ref.toLowerCase()),
-			);
-			if (!isAllowed) {
-				return { allowed: false, reason: "访问来源不在允许范围内" };
-			}
+		if (!referrer) {
+			return { allowed: false, reason: "访问来源不在允许范围内" };
+		}
+		const isAllowed = restrictions.allowed_referrers.some((ref) =>
+			referrer.toLowerCase().includes(ref.toLowerCase()),
+		);
+		if (!isAllowed) {
+			return { allowed: false, reason: "访问来源不在允许范围内" };
 		}
 	}
 
