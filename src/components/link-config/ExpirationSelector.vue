@@ -35,7 +35,7 @@
                 format="YYYY-MM-DD HH:mm:ss"
                 placeholder="选择过期时间"
                 class="w-full mt-2"
-                :disabled-date="(current) => current < new Date()"
+                :disabled-date="(current) => dayjs(current).isBefore(dayjs(), 'day')"
             />
 
             <div v-if="localMode === 'none'" class="text-xs text-gray-400 mt-2">
@@ -60,6 +60,7 @@
 </template>
 
 <script setup lang="ts">
+import dayjs from "dayjs";
 import { computed } from "vue";
 import { formatDate } from "@/utils/date";
 

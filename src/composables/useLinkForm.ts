@@ -135,10 +135,8 @@ export function useLinkForm(
 			const fwdHeaders = (data as any).forward_header_list;
 			formData.forward_header_list = Array.isArray(fwdHeaders) ? fwdHeaders : [];
 
-			// 设置过期模式
-			if (data.expiration_option_id) {
-				expirationMode.value = "preset";
-			} else if (data.expiration_date) {
+			// 设置过期模式（数据库不存储 expiration_option_id，有日期则显示自定义模式）
+			if (data.expiration_date) {
 				expirationMode.value = "custom";
 			} else {
 				expirationMode.value = "none";
