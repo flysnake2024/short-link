@@ -92,10 +92,28 @@ export async function getUserLinks(
 	total: number;
 }> {
 	try {
-		const { limit = 10, offset = 0, sortBy = "created_at", sortOrder = "desc" } = options;
+		const {
+			limit = 10,
+			offset = 0,
+			sortBy = "created_at",
+			sortOrder = "desc",
+			keyword,
+			linkId,
+		} = options as { limit?: number; offset?: number; sortBy?: string; sortOrder?: string; keyword?: string | null; linkId?: number | null };
 
 		// 构建查询
 		let query = supabase.from("links").select("*", { count: "exact" }).eq("user_id", userId);
+
+		// 按链接 ID 精确筛选
+		if (linkId) {
+			query = query.eq("id", linkId);
+		}
+
+		// 关键词模糊搜索（匹配原始链接、短码、标题、描述）
+		if (keyword && keyword.trim()) {
+			const kw = `%${keyword.trim()}%`;
+			query = query.or(`link.ilike.${kw},short.ilike.${kw},title.ilike.${kw},description.ilike.${kw}`);
+		}
 
 		// 排序
 		const ascending = sortOrder === "asc";

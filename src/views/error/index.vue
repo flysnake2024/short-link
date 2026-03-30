@@ -121,7 +121,7 @@
                     <a-typography-text type="secondary" class="text-sm">
                         遇到问题？
                         <a-link
-                            href="https://github.com/Alessandro-Pang/short-link/issues"
+                            href="mailto:loveflyelephant@gmail.com"
                             target="_blank"
                             class="font-medium inline-flex items-center gap-1 hover:gap-2 transition-all"
                         >

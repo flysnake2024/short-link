@@ -129,6 +129,13 @@ const handlePeriodChange = () => {
 
                         <!-- 链接信息 -->
                         <div class="flex-1 min-w-0">
+                            <div
+                                v-if="link.title"
+                                class="font-medium text-gray-800 dark:text-gray-200 truncate mb-0.5"
+                                :title="link.title"
+                            >
+                                {{ link.title }}
+                            </div>
                             <div class="flex items-center gap-2 mb-1">
                                 <a-link
                                     :href="`${origin}/u/${link.short}`"

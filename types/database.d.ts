@@ -287,6 +287,7 @@ export type Database = {
 					id: number;
 					is_active: boolean;
 					link: string;
+					title: string | null;
 					period_clicks: number;
 					short: string;
 					user_id: string;

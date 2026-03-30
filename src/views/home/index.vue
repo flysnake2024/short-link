@@ -483,16 +483,7 @@
                         © {{ new Date().getFullYear() }} Short Link Service.
                         All rights reserved.
                     </div>
-                    <div class="text-gray-400">
-                        <a
-                            href="https://blog.pangcy.cn"
-                            target="_blank"
-                            rel="noopener"
-                            class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                        >
-                            ziYang | 子洋 · blog
-                        </a>
-                    </div>
+
                 </div>
             </div>
         </footer>

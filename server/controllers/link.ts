@@ -253,18 +253,22 @@ export async function getUserStats(request, reply) {
  */
 export async function getUserLinks(request, reply) {
 	try {
-		const { page = 1, pageSize = 10, sortBy = "created_at", sortOrder = "desc" } = request.query;
-
-		// 验证分页参数
-		const paginationValidation = validatePagination({ page, pageSize });
-		const paginationErr = validationError(reply, paginationValidation);
-		if (paginationErr) return paginationErr;
+		const {
+			limit = 10,
+			offset = 0,
+			orderBy = "created_at",
+			ascending = "false",
+			keyword = null,
+			linkId = null,
+		} = request.query;
 
 		const result = await dashboardService.getUserLinks(request.user.id, {
-			limit: parseInt(pageSize, 10),
-			offset: (parseInt(page, 10) - 1) * parseInt(pageSize, 10),
-			sortBy,
-			sortOrder,
+			limit: parseInt(limit, 10) || 10,
+			offset: parseInt(offset, 10) || 0,
+			sortBy: orderBy,
+			sortOrder: ascending === "true" ? "asc" : "desc",
+			keyword: keyword || null,
+			linkId: linkId ? parseInt(linkId, 10) : null,
 		});
 
 		return success(reply, result);
