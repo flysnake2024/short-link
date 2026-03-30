@@ -209,7 +209,7 @@ export function useLinkForm(
 			password: formData.password || null, // 直接包含密码字段
 		};
 
-		// 处理过期时间
+		// 处理过期时间（统一转为 UTC ISO 格式，避免时区问题）
 		if (expirationMode.value === "preset" && formData.expiration_option_id) {
 			// 根据预设选项计算实际过期时间
 			const selectedOption = expirationOptions.value.find(
@@ -222,13 +222,14 @@ export function useLinkForm(
 				} else if (selectedOption.days) {
 					expirationTime = expirationTime.add(selectedOption.days, "day");
 				}
-				data.expiration_date = expirationTime.format("YYYY-MM-DDTHH:mm:ss");
+				data.expiration_date = expirationTime.toISOString();
 			} else {
 				// 永久选项或未找到选项，清除过期时间
 				data.expiration_date = null;
 			}
 		} else if (expirationMode.value === "custom" && formData.expiration_date) {
-			data.expiration_date = formData.expiration_date;
+			// 将本地时间转为 UTC ISO 字符串，确保跨时区正确比较
+			data.expiration_date = dayjs(formData.expiration_date).toISOString();
 		} else {
 			data.expiration_date = null;
 		}
