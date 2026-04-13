@@ -623,7 +623,7 @@ const generateShortLink = async () => {
 
 		const { data } = await addUrl(inputUrl, config);
 		if (data?.short) {
-			currentShortUrl.value = `${window.location.origin}/u/${data.short}`;
+			currentShortUrl.value = `${window.location.origin}/${data.short}`;
 		} else if (data?.url) {
 			currentShortUrl.value = window.location.origin + data.url;
 		} else {

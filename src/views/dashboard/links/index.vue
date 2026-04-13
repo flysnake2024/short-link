@@ -127,7 +127,7 @@ const handleSortChange = (dataIndex, direction) => {
 };
 
 const copyLink = async (short) => {
-	const url = `${origin}/u/${short}`;
+	const url = `${origin}/${short}`;
 	try {
 		await navigator.clipboard.writeText(url);
 		Message.success("链接已复制到剪贴板");
@@ -137,7 +137,7 @@ const copyLink = async (short) => {
 };
 
 const showQRCode = async (short) => {
-	const url = `${origin}/u/${short}`;
+	const url = `${origin}/${short}`;
 	currentQrUrl.value = url;
 	qrcodeModalVisible.value = true;
 	await nextTick();
@@ -461,10 +461,10 @@ defineExpose({
                                 <div class="py-2">
                                     <div class="flex items-center gap-2 mb-1">
                                         <a-link
-                                            :href="`${origin}/u/${record.short}`"
+                                            :href="`${origin}/${record.short}`"
                                             target="_blank"
                                             class="font-bold text-blue-600 text-base"
-                                            >{{ origin }}/u/{{
+                                            >{{ origin }}/{{
                                                 record.short
                                             }}</a-link
                                         >
@@ -770,7 +770,7 @@ defineExpose({
                         >
                         <a-link
                             class="w-[38px]! px-0!"
-                            @click="copyLink(currentQrUrl.split('/u/').pop())"
+                            @click="copyLink(currentQrUrl.split('/').pop())"
                             >复制</a-link
                         >
                     </div>

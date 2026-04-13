@@ -107,7 +107,7 @@ const rules = {
 // 复制短链接
 const copyShortLink = async () => {
 	if (!linkData.value?.short) return;
-	const url = `${origin}/u/${linkData.value.short}`;
+	const url = `${origin}/${linkData.value.short}`;
 	try {
 		await navigator.clipboard.writeText(url);
 		Message.success("链接已复制到剪贴板");
@@ -280,11 +280,11 @@ watch(
                     >
                         <div class="flex items-center gap-2">
                             <a-link
-                                :href="`${origin}/u/${linkData?.short}`"
+                                :href="`${origin}/${linkData?.short}`"
                                 target="_blank"
                                 class="text-blue-600"
                             >
-                                {{ origin }}/u/{{ linkData?.short }}
+                                {{ origin }}/{{ linkData?.short }}
                             </a-link>
                             <a-button
                                 size="mini"

@@ -138,11 +138,11 @@ const handlePeriodChange = () => {
                             </div>
                             <div class="flex items-center gap-2 mb-1">
                                 <a-link
-                                    :href="`${origin}/u/${link.short}`"
+                                    :href="`${origin}/${link.short}`"
                                     target="_blank"
                                     class="font-medium text-blue-600 hover:text-blue-700 text-base"
                                 >
-                                    {{ origin }}/u/{{ link.short }}
+                                    {{ origin }}/{{ link.short }}
                                 </a-link>
                             </div>
                             <div

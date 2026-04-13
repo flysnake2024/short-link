@@ -22,6 +22,7 @@ import { updateSEO } from "@/utils/seo";
  * - menuOrder: 菜单排序（数字越小越靠前）
  */
 
+// 新增顶层页面路由时，需同步更新 vercel.json 的 rewrites 和 server/services/link.ts 的 RESERVED_PATHS
 const routes: RouteRecordRaw[] = [
 	{
 		path: "/",

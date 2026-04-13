@@ -8,8 +8,14 @@
 	},
 	"rewrites": [
 		{ "source": "/api/(.*)", "destination": "/api" },
-		{ "source": "/u/(.*)", "destination": "/api" },
 		{ "source": "/health", "destination": "/api" },
-		{ "source": "/(.*)", "destination": "/index.html" }
+		{ "source": "/login", "destination": "/index.html" },
+		{ "source": "/register", "destination": "/index.html" },
+		{ "source": "/forgot-password", "destination": "/index.html" },
+		{ "source": "/reset-password", "destination": "/index.html" },
+		{ "source": "/error", "destination": "/index.html" },
+		{ "source": "/password-verify/:hash", "destination": "/index.html" },
+		{ "source": "/dashboard/:path*", "destination": "/index.html" },
+		{ "source": "/:hash", "destination": "/api" }
 	]
 }

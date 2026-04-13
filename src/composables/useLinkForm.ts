@@ -126,7 +126,8 @@ export function useLinkForm(
 			formData.redirect_type = data.redirect_type || 302;
 			formData.pass_query_params = data.pass_query_params || false;
 			formData.forward_headers = data.forward_headers || false;
-			formData.expiration_date = data.expiration_date || null;
+			// 补上 'Z' 后缀确保 dayjs 按 UTC 解析（Supabase 返回无时区后缀的 UTC 字符串）
+		formData.expiration_date = data.expiration_date ? data.expiration_date + "Z" : null;
 			formData.expiration_option_id = data.expiration_option_id || null;
 			formData.max_clicks = data.max_clicks || null;
 			formData.password = ""; // 密码不从服务器加载，始终为空

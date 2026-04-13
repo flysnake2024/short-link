@@ -132,21 +132,6 @@ app.register(rateLimit as any, {
 	},
 });
 
-// 注册短链接重定向路由（独立于 API 路由组）
-// 为重定向接口设置更宽松的速率限制
-app.get(
-	"/u/:hash",
-	{
-		config: {
-			rateLimit: {
-				max: 200,
-				timeWindow: "1 minute",
-			},
-		},
-	},
-	linkController.redirectShortLink,
-);
-
 // 注册路由组
 app.register(apiRoutes, { prefix: "/api" });
 app.register(dashboardRoutes, { prefix: "/api/dashboard" });
@@ -191,6 +176,20 @@ app.get("/", async (_request, reply) => {
 		},
 	});
 });
+
+// 短链接重定向路由（必须在所有其他路由之后注册，作为兜底路由）
+app.get(
+	"/:hash",
+	{
+		config: {
+			rateLimit: {
+				max: 200,
+				timeWindow: "1 minute",
+			},
+		},
+	},
+	linkController.redirectShortLink,
+);
 
 // Vercel 导出
 export default async function handler(req, reply) {

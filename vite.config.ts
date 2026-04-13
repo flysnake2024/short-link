@@ -128,16 +128,12 @@ export default defineConfig(({ mode }): UserConfig => {
 			include: ["vue", "vue-router", "pinia", "@arco-design/web-vue", "dayjs", "qrcode"],
 		},
 		server: {
-			proxy: {
-				"/api": {
-					target: `http://localhost:${env.DEV_SERVER_PORT || 3000}`,
-					changeOrigin: true,
-				},
-				"/u": {
-					target: `http://localhost:${env.DEV_SERVER_PORT || 3000}`,
-					changeOrigin: true,
-				},
+		proxy: {
+			"/api": {
+				target: `http://localhost:${env.DEV_SERVER_PORT || 3000}`,
+				changeOrigin: true,
 			},
+		},
 		},
 		define: {
 			__SUPABASE_URL__: JSON.stringify(env.SUPABASE_URL),

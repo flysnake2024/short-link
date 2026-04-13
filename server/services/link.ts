@@ -21,6 +21,22 @@ import { generateSecureHash, hashPassword, MAX_HASH_RETRIES } from "../utils/sec
 const EXPIRATION_OPTIONS_CACHE_TTL = CACHE_CONFIG.EXPIRATION_OPTIONS_TTL; // 5 分钟
 
 /**
+ * 短链接路径不可使用的保留词（前端路由 + 后端路由）
+ * 新增前端页面路由时需同步更新此列表和 vercel.json
+ */
+const RESERVED_PATHS = new Set([
+	"api",
+	"health",
+	"login",
+	"register",
+	"error",
+	"dashboard",
+	"forgot-password",
+	"reset-password",
+	"password-verify",
+]);
+
+/**
  * 解析 User-Agent 获取设备类型
  * @param {string} userAgent - User-Agent 字符串
  * @returns {string} 设备类型: mobile/tablet/desktop
@@ -227,9 +243,14 @@ export async function getUrl(
 			return { data: null, error: { message: "链接已被禁用" } };
 		}
 
-		// 检查是否过期
-		if (data.expiration_date && dayjs(data.expiration_date).isBefore(dayjs())) {
-			return { data: null, error: { message: "链接已过期" } };
+		// 检查是否过期（Supabase 存储 timestamp without time zone，均为 UTC，补 Z 确保正确解析）
+		if (data.expiration_date) {
+			const expUTC = data.expiration_date.includes("Z") || data.expiration_date.includes("+")
+				? data.expiration_date
+				: data.expiration_date + "Z";
+			if (dayjs(expUTC).isBefore(dayjs())) {
+				return { data: null, error: { message: "链接已过期" } };
+			}
 		}
 
 		// 检查点击次数限制
@@ -273,6 +294,10 @@ async function generateUniqueHash(retryCount = 0) {
 	}
 
 	const short = generateSecureHash(6);
+
+	if (RESERVED_PATHS.has(short.toLowerCase())) {
+		return generateUniqueHash(retryCount + 1);
+	}
 
 	// 检查短链接哈希是否已存在
 	const { data: existingShort } = await supabase

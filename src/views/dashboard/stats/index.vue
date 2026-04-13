@@ -155,10 +155,10 @@
                         >
                             <template #cell="{ record }">
                                 <a-link
-                                    :href="`${origin}/u/${record.short}`"
+                                    :href="`${origin}/${record.short}`"
                                     target="_blank"
                                     class="font-medium text-blue-600"
-                                    >{{ origin }}/u/{{ record.short }}</a-link
+                                    >{{ origin }}/{{ record.short }}</a-link
                                 >
                             </template>
                         </a-table-column>

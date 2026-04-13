@@ -61,7 +61,7 @@ export async function createShortLink(request, reply) {
 
 		return success(reply, {
 			...result.data,
-			url: `/u/${result.data.short}`,
+			url: `/${result.data.short}`,
 		});
 	} catch (error) {
 		request.log.error("创建短链接失败:", error);

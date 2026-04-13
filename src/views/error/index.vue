@@ -175,7 +175,7 @@ onMounted(() => {
 });
 
 const retry = () => {
-	window.location.replace(`/u/${route.query.short}`);
+	window.location.replace(`/${route.query.short}`);
 };
 
 const goHome = () => {
