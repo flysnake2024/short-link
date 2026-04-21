@@ -1,11 +1,13 @@
 <template>
     <div class="app-container">
         <router-view />
+        <Analytics />
     </div>
 </template>
 
 <script setup>
 import { Message } from "@arco-design/web-vue";
+import { Analytics } from "@vercel/analytics/vue";
 import { onMounted, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
 import { onAuthStateChange, recordLoginAttempt } from "@/services/auth";
