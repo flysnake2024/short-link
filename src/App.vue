@@ -1,6 +1,7 @@
 <template>
     <div class="app-container">
         <router-view />
+        <Analytics />
     </div>
 </template>
 
@@ -8,6 +9,7 @@
 import { Message } from "@arco-design/web-vue";
 import { onMounted, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
+import { Analytics } from "@vercel/analytics/vue";
 import { onAuthStateChange, recordLoginAttempt } from "@/services/auth";
 import { supabase } from "@/services/supabase";
 
